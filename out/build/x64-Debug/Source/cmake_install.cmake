@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/source
+# Install script for directory: C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/Source
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

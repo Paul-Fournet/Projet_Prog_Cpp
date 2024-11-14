@@ -35,6 +35,8 @@ endif()
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Source/cmake_install.cmake")
+  include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Headers/cmake_install.cmake")
+  include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Assets/cmake_install.cmake")
 
 endif()
 

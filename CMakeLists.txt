@@ -16,6 +16,8 @@ if(MSVC)
 endif()
 
 add_subdirectory(Source)
+add_subdirectory(Headers)
+add_subdirectory(Assets)
 
 find_package (Threads)
 find_package(SFML 2.5 COMPONENTS window system graphics REQUIRED)
