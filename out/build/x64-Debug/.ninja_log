@@ -1,6 +1,4 @@
 # ninja log v5
-40	348	7533138856876811	build.ninja	2c9252ba071f7e7f
-18	852	7533028143602678	Source/CMakeFiles/traffic_light.dir/traffic_light.cpp.obj	c3eae21d822d1a98
-853	2226	7533028156876190	Source/traffic_light.exe	8a4583b933f463b4
-29	1083	7533138903525410	Source/CMakeFiles/traffic_light.dir/traffic_light.cpp.obj	d9340a6edd26dba1
-1083	1650	7533138908391959	Source/traffic_light.exe	8a4583b933f463b4
+40	348	7533570428637131	build.ninja	2c9252ba071f7e7f
+69	1389	7533153953938532	Source/CMakeFiles/traffic_light.dir/traffic_light.cpp.obj	d9340a6edd26dba1
+1390	2487	7533153963864881	Source/traffic_light.exe	8a4583b933f463b4
