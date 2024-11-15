@@ -200,7 +200,7 @@ int main()
 
 
     sf::Texture texture_carrefour;
-    texture_carrefour.loadFromFile("C:/Users/paul.fournet/Source/Repos/Projet_Prog_Cpp_/Assets/Carrefour/image_carrefour.png");
+    texture_carrefour.loadFromFile("../../../../Assets/Carrefour/image_carrefour.png");
     
     sf::Sprite sprite_carrefour;
     sprite_carrefour.setTexture(texture_carrefour);
