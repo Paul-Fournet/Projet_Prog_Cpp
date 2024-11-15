@@ -173,14 +173,17 @@
 //}
 
 #include <SFML/Graphics.hpp>
+#include <iostream>
+
+using namespace std;
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    /*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     
-
+    
     while (window.isOpen())
     {
         sf::Event event;
@@ -193,7 +196,52 @@ int main()
         window.clear();
         window.draw(shape);
         window.display();
+    }*/
+
+
+    sf::Texture texture_carrefour;
+    texture_carrefour.loadFromFile("C:/Users/paul.fournet/Source/Repos/Projet_Prog_Cpp_/Assets/Carrefour/image_carrefour.png");
+    
+    sf::Sprite sprite_carrefour;
+    sprite_carrefour.setTexture(texture_carrefour);
+
+    
+
+
+    //sf::Window window(sf::VideoMode(image_carrefour.getSize().x, image_carrefour.getSize().y), "Simulation");
+    int width = 1000;
+    int height = (int)(width * texture_carrefour.getSize().y /texture_carrefour.getSize().x);
+    
+    sf::RenderWindow window(sf::VideoMode(width, height), "Simulation");
+    
+    //Positionnnement de l'image du carrefour
+    sprite_carrefour.setScale(
+        static_cast<float>(window.getSize().x) / texture_carrefour.getSize().x,
+        static_cast<float>(window.getSize().y) / texture_carrefour.getSize().y
+    );
+    
+    while (window.isOpen()) {
+
+        sf::Event event;
+
+        //Un évènement s'est-il produit ?
+        while (window.pollEvent(event)){
+
+            if (event.type == sf::Event::Closed) {
+                window.close();
+            }
+
+            
+            window.clear(sf::Color::Black);
+            //Affichage du carrefour
+            window.draw(sprite_carrefour);
+            window.display();
+        }
+            
     }
+
+    //cout << image_carrefour.getSize().x << " , " << image_carrefour.getSize().y << endl;
+
 
     return 0;
 }
