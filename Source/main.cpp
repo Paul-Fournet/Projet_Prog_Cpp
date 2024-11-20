@@ -172,76 +172,90 @@
 //    return 0;
 //}
 
-#include <SFML/Graphics.hpp>
-#include <iostream>
+#include "../Headers/main.hpp"
+#include "../Headers/classes.hpp"
 
 using namespace std;
+using namespace sf;
 
-int main()
-{
-    /*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-    
-    
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+int main() {
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }*/
+    int WINDOW_WIDTH = 1000;
+    int TIME_ON = 5;
+    int TIME_TRANSITION = 1;
 
 
-    sf::Texture texture_carrefour;
+    Texture texture_carrefour;
     texture_carrefour.loadFromFile("../../../../Assets/Carrefour/image_carrefour.png");
     
-    sf::Sprite sprite_carrefour;
+    Sprite sprite_carrefour;
     sprite_carrefour.setTexture(texture_carrefour);
-
-    
 
 
     //sf::Window window(sf::VideoMode(image_carrefour.getSize().x, image_carrefour.getSize().y), "Simulation");
-    int width = 1000;
+    int width = WINDOW_WIDTH;
     int height = (int)(width * texture_carrefour.getSize().y /texture_carrefour.getSize().x);
     
     sf::RenderWindow window(sf::VideoMode(width, height), "Simulation");
+    window.setVerticalSyncEnabled(true);
     
     //Positionnnement de l'image du carrefour
     sprite_carrefour.setScale(
         static_cast<float>(window.getSize().x) / texture_carrefour.getSize().x,
         static_cast<float>(window.getSize().y) / texture_carrefour.getSize().y
     );
+
+
+    //Feux de circulation (représentés par des disques)
+    //H : horizontal
+    //V : vertical
+    //G : gauche
+    //D : droite
+
+    Vector2f pos_feu_HG((float)window.getSize().x / 3, (float)2 * window.getSize().y / 3);
+    Vector2f pos_feu_HD((float)2 * window.getSize().x / 3, (float)window.getSize().y / 3);
+    Vector2f pos_feu_VH((float)3 * window.getSize().x / 8, (float)1 * window.getSize().y / 4);
+    Vector2f pos_feu_VB((float)5 * window.getSize().x / 8, (float)3 * window.getSize().y / 4);
+
+    Traffic_light feu_HG(Color::Black, 0, pos_feu_HG);
+    Traffic_light feu_HD(Color::Black, 0, pos_feu_HD);
+    Traffic_light feu_VH(Color::Black, 1, pos_feu_VH);
+    Traffic_light feu_VB(Color::Black, 1, pos_feu_VB);
+
+    //Thread permettant le fonctionnement des feux de circulation
+
+    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION);
+
     
+
+    //Tant que la fenêtre est ouverte
     while (window.isOpen()) {
 
-        sf::Event event;
+        Event event;
 
         //Un évènement s'est-il produit ?
-        while (window.pollEvent(event)){
-
-            if (event.type == sf::Event::Closed) {
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
                 window.close();
             }
-
-            
-            window.clear(sf::Color::Black);
-            //Affichage du carrefour
-            window.draw(sprite_carrefour);
-            window.display();
         }
-            
+
+        window.clear(Color::Black);
+
+        //Affichage du carrefour
+        window.draw(sprite_carrefour);
+        
+        //Affichage des feux
+        window.draw(feu_HG.return_traffic_light());
+        window.draw(feu_HD.return_traffic_light());
+        window.draw(feu_VH.return_traffic_light());
+        window.draw(feu_VB.return_traffic_light());
+        
+        window.display();
     }
+    
+    thread_feux.join();
 
-    //cout << image_carrefour.getSize().x << " , " << image_carrefour.getSize().y << endl;
-
-
+    
     return 0;
 }
