@@ -174,6 +174,7 @@
 
 #include "../Headers/main.hpp"
 #include "../Headers/classes.hpp"
+#include <filesystem>
 
 using namespace std;
 using namespace sf;
@@ -181,8 +182,8 @@ using namespace sf;
 int main() {
 
     int WINDOW_WIDTH = 1000;
-    int TIME_ON = 5;
-    int TIME_TRANSITION = 1;
+    float TIME_ON = 5;
+    float TIME_TRANSITION = 1;
 
 
     Texture texture_carrefour;
@@ -211,6 +212,8 @@ int main() {
     //V : vertical
     //G : gauche
     //D : droite
+    //B : bas
+    //H : haut
 
     Vector2f pos_feu_HG((float)window.getSize().x / 3, (float)2 * window.getSize().y / 3);
     Vector2f pos_feu_HD((float)2 * window.getSize().x / 3, (float)window.getSize().y / 3);
@@ -222,11 +225,21 @@ int main() {
     Traffic_light feu_VH(Color::Black, 1, pos_feu_VH);
     Traffic_light feu_VB(Color::Black, 1, pos_feu_VB);
 
-    //Thread permettant le fonctionnement des feux de circulation
 
-    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION);
+
+    Texture texture_voiture;
+    texture_voiture.loadFromFile("../../../../Assets/Vehicules/vecteezy_car-top-view-clipart-design-illustration_9380944.png");
 
     
+    
+
+    
+
+    
+
+    //Thread permettant le fonctionnement des feux de circulation
+    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION);
+
 
     //Tant que la fenêtre est ouverte
     while (window.isOpen()) {

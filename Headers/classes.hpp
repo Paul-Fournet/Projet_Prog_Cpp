@@ -34,4 +34,29 @@ public:
     CircleShape return_traffic_light() const;//Arguments à vérifier
 };
 
-void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB,int time_on,int time_transition);
+void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB,float time_on,float time_transition);
+
+
+
+class RoadUser {
+protected:
+    int type_;//0 : voiture, 1 : bus, 2 : piétons, 3 : vélos
+    float n_speed_;
+    Sprite sprite_;
+public:
+    virtual int get_type() = 0;
+    virtual float get_n_speed() = 0;
+    virtual Sprite return_sprite()=0;
+};
+
+
+class Car : RoadUser {
+private:
+    Vertex voie_;
+
+public:
+    Car(Vertex voie);//La voie et la vitesse vont être déterminés automatiquement
+    int get_type();
+    float get_n_speed();
+    Sprite return_sprite();
+};
