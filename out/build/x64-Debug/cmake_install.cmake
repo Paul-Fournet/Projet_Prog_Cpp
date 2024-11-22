@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_
+# Install script for directory: C:/Users/manguiliwe.awesso/source/repos/Paul-Fournet/Projet_Prog_Cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/paul.fournet/Source/Repos/Projet_Prog_Cpp_/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/manguiliwe.awesso/Source/Repos/Paul-Fournet/Projet_Prog_Cpp/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,9 +34,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Source/cmake_install.cmake")
-  include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Headers/cmake_install.cmake")
-  include("C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/Assets/cmake_install.cmake")
+  include("C:/Users/manguiliwe.awesso/source/repos/Paul-Fournet/Projet_Prog_Cpp/out/build/x64-Debug/source/cmake_install.cmake")
+  include("C:/Users/manguiliwe.awesso/source/repos/Paul-Fournet/Projet_Prog_Cpp/out/build/x64-Debug/Headers/cmake_install.cmake")
+  include("C:/Users/manguiliwe.awesso/source/repos/Paul-Fournet/Projet_Prog_Cpp/out/build/x64-Debug/Assets/cmake_install.cmake")
 
 endif()
 
@@ -48,5 +48,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/manguiliwe.awesso/source/repos/Paul-Fournet/Projet_Prog_Cpp/out/build/x64-Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
