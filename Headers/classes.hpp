@@ -46,7 +46,7 @@ protected:
 public:
     virtual int get_type() = 0;
     virtual float get_n_speed() = 0;
-    virtual Sprite return_sprite()=0;
+    virtual Sprite return_sprite() = 0;
 };
 
 
