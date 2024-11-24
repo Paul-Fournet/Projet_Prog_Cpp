@@ -15,6 +15,8 @@ if(MSVC)
     )
 endif()
 
+set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+
 add_subdirectory(Source)
 add_subdirectory(Headers)
 add_subdirectory(Assets)

@@ -79,7 +79,7 @@ build cmake_object_order_depends_target_Simulation: phony || .
 
 build Source\CMakeFiles\Simulation.dir\main.cpp.obj: CXX_COMPILER__Simulation_unscanned_Debug C$:\Users\paul.fournet\source\repos\Projet_Prog_Cpp_\Source\main.cpp || cmake_object_order_depends_target_Simulation
   DEFINES = -DSFML_STATIC
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /MTd
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MTd -std:c++20 /MTd
   INCLUDES = -external:I"C:\Program Files\SFML\include" -external:W0
   OBJECT_DIR = Source\CMakeFiles\Simulation.dir
   OBJECT_FILE_DIR = Source\CMakeFiles\Simulation.dir
@@ -88,7 +88,7 @@ build Source\CMakeFiles\Simulation.dir\main.cpp.obj: CXX_COMPILER__Simulation_un
 
 build Source\CMakeFiles\Simulation.dir\fonctions.cpp.obj: CXX_COMPILER__Simulation_unscanned_Debug C$:\Users\paul.fournet\source\repos\Projet_Prog_Cpp_\Source\fonctions.cpp || cmake_object_order_depends_target_Simulation
   DEFINES = -DSFML_STATIC
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /MTd
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MTd -std:c++20 /MTd
   INCLUDES = -external:I"C:\Program Files\SFML\include" -external:W0
   OBJECT_DIR = Source\CMakeFiles\Simulation.dir
   OBJECT_FILE_DIR = Source\CMakeFiles\Simulation.dir
@@ -97,7 +97,7 @@ build Source\CMakeFiles\Simulation.dir\fonctions.cpp.obj: CXX_COMPILER__Simulati
 
 build Source\CMakeFiles\Simulation.dir\gestion_feux.cpp.obj: CXX_COMPILER__Simulation_unscanned_Debug C$:\Users\paul.fournet\source\repos\Projet_Prog_Cpp_\Source\gestion_feux.cpp || cmake_object_order_depends_target_Simulation
   DEFINES = -DSFML_STATIC
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /MTd
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MTd -std:c++20 /MTd
   INCLUDES = -external:I"C:\Program Files\SFML\include" -external:W0
   OBJECT_DIR = Source\CMakeFiles\Simulation.dir
   OBJECT_FILE_DIR = Source\CMakeFiles\Simulation.dir
@@ -106,7 +106,7 @@ build Source\CMakeFiles\Simulation.dir\gestion_feux.cpp.obj: CXX_COMPILER__Simul
 
 build Source\CMakeFiles\Simulation.dir\gestion_road-users.cpp.obj: CXX_COMPILER__Simulation_unscanned_Debug C$:\Users\paul.fournet\source\repos\Projet_Prog_Cpp_\Source\gestion_road-users.cpp || cmake_object_order_depends_target_Simulation
   DEFINES = -DSFML_STATIC
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++20 /MTd
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MTd -std:c++20 /MTd
   INCLUDES = -external:I"C:\Program Files\SFML\include" -external:W0
   OBJECT_DIR = Source\CMakeFiles\Simulation.dir
   OBJECT_FILE_DIR = Source\CMakeFiles\Simulation.dir
@@ -122,7 +122,7 @@ build Source\CMakeFiles\Simulation.dir\gestion_road-users.cpp.obj: CXX_COMPILER_
 # Link the executable Source\Simulation.exe
 
 build Source\Simulation.exe: CXX_EXECUTABLE_LINKER__Simulation_Debug Source\CMakeFiles\Simulation.dir\main.cpp.obj Source\CMakeFiles\Simulation.dir\fonctions.cpp.obj Source\CMakeFiles\Simulation.dir\gestion_feux.cpp.obj Source\CMakeFiles\Simulation.dir\gestion_road-users.cpp.obj | C$:\Program$ Files\SFML\lib\sfml-graphics-s-d.lib C$:\Program$ Files\SFML\lib\sfml-window-s-d.lib C$:\Program$ Files\SFML\lib\sfml-system-s-d.lib C$:\Program$ Files\SFML\lib\freetype.lib
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
+  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MTd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = "C:\Program Files\SFML\lib\sfml-graphics-s-d.lib"  "C:\Program Files\SFML\lib\sfml-window-s-d.lib"  "C:\Program Files\SFML\lib\sfml-system-s-d.lib"  OpenGL32.lib  winmm.lib  gdi32.lib  legacy_stdio_definitions.lib  "C:\Program Files\SFML\lib\freetype.lib"  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = Source\CMakeFiles\Simulation.dir
