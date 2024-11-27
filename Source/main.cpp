@@ -233,8 +233,11 @@ int main() {
     
 
 
+    FloatRect rect_feu1(100, 150, 100, 100);
+    
+    
 
-
+    
 
 
     //Threads :
@@ -270,6 +273,8 @@ int main() {
         //Affichage de/des voitures
         window.draw(car1.return_sprite());
 
+
+        
 
 
         window.display();

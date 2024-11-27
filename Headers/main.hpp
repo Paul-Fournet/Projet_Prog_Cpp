@@ -7,6 +7,7 @@
 #include <thread>
 #include <mutex>
 #include <vector>
+#include <deque>
 
 using namespace std;
 using namespace sf;
