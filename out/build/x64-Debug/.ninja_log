@@ -1,6 +1,7 @@
 # ninja log v5
-9	75	7543957023559738	Source/CMakeFiles/Simulation.dir/fonctions.cpp.obj	fe6a14e84f892dd9
-32	781	7543957030590915	Source/CMakeFiles/Simulation.dir/gestion_road-users.cpp.obj	d670f2d3329d0388
-21	1173	7543957034502522	Source/CMakeFiles/Simulation.dir/gestion_feux.cpp.obj	86c7b3ce6f3a45c6
-3	1333	7543957036227373	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
-1334	2137	7543957043883365	Source/Simulation.exe	6ac24be22e895fc7
+30	42	0	clean	21a4d0550fd2b6b1
+23	96	7543970666891257	Source/CMakeFiles/Simulation.dir/fonctions.cpp.obj	fe6a14e84f892dd9
+35	1066	7543970676600981	Source/CMakeFiles/Simulation.dir/gestion_road-users.cpp.obj	d670f2d3329d0388
+30	1614	7543970682043809	Source/CMakeFiles/Simulation.dir/gestion_feux.cpp.obj	86c7b3ce6f3a45c6
+13	1766	7543970683565063	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
+1767	2136	7543970686614966	Source/Simulation.exe	6ac24be22e895fc7
