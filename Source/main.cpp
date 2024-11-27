@@ -229,7 +229,7 @@ int main() {
 
 
 
-    Car car1(4,texture_voiture,std::ref(window));
+    Car car1(1,texture_voiture,std::ref(window));
     
 
 

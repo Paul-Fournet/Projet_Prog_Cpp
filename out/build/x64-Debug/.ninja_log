@@ -1,6 +1,20 @@
 # ninja log v5
-16	104	7539942523011970	source/CMakeFiles/Simulation.dir/fonctions.cpp.obj	b0f04e84f31f0e11
-37	1093	7539942532809745	source/CMakeFiles/Simulation.dir/gestion_road-users.cpp.obj	c25922845b38ac87
-28	1692	7539942538831595	source/CMakeFiles/Simulation.dir/gestion_feux.cpp.obj	ae0e1e984164921f
-4	1876	7539942540638749	source/CMakeFiles/Simulation.dir/main.cpp.obj	5c71306d0e866cfa
-1876	3215	7539942553614277	source/Simulation.exe	abc54e22ac09497d
+39	260	7543941654912887	build.ninja	2c9252ba071f7e7f
+21	1181	7534072562285285	Source/CMakeFiles/traffic_light.dir/traffic_light.cpp.obj	d9340a6edd26dba1
+21	1706	7542235824377113	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
+1183	2396	7534072573867812	Source/traffic_light.exe	8a4583b933f463b4
+39	54	0	clean	21a4d0550fd2b6b1
+1706	3044	7542235836893992	Source/Simulation.exe	6ac24be22e895fc7
+27	387	7542235811148586	Source/CMakeFiles/Simulation.dir/fonctions.cpp.obj	fe6a14e84f892dd9
+32	1496	7542235822270064	Source/CMakeFiles/Simulation.dir/gestion_feux.cpp.obj	86c7b3ce6f3a45c6
+37	1021	7542235817527080	Source/CMakeFiles/Simulation.dir/gestion_road-users.cpp.obj	d670f2d3329d0388
+30	1350	7543943899575765	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
+1351	1685	7543943902232008	Source/Simulation.exe	6ac24be22e895fc7
+29	1521	7543944054284942	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
+1521	1960	7543944058039484	Source/Simulation.exe	6ac24be22e895fc7
+50	66	0	clean	21a4d0550fd2b6b1
+22	98	7543946926228910	Source/CMakeFiles/Simulation.dir/fonctions.cpp.obj	fe6a14e84f892dd9
+47	832	7543946933471059	Source/CMakeFiles/Simulation.dir/gestion_road-users.cpp.obj	d670f2d3329d0388
+34	1264	7543946937845911	Source/CMakeFiles/Simulation.dir/gestion_feux.cpp.obj	86c7b3ce6f3a45c6
+13	1440	7543946939564917	Source/CMakeFiles/Simulation.dir/main.cpp.obj	b5e8e4e67131d0bd
+1440	1874	7543946942695401	Source/Simulation.exe	6ac24be22e895fc7
