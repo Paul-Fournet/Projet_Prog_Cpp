@@ -181,23 +181,25 @@ using namespace sf;
 
 int main() {
 
-    int WINDOW_WIDTH = 1000;
-    float TIME_ON = 5;
-    float TIME_TRANSITION = 1;
+    Clock clock_;
 
+    //Définition des textures des éléments du jeu
 
     Texture texture_carrefour;
     texture_carrefour.loadFromFile("../../../../Assets/Carrefour/image_carrefour.png");
     
+    Texture texture_voiture;
+    texture_voiture.loadFromFile("../../../../Assets/Vehicules/vecteezy_car-top-view-clipart-design-illustration_9380944.png");
+
+    
+
+
     Sprite sprite_carrefour;
     sprite_carrefour.setTexture(texture_carrefour);
 
-
-    //sf::Window window(sf::VideoMode(image_carrefour.getSize().x, image_carrefour.getSize().y), "Simulation");
-    int width = WINDOW_WIDTH;
-    int height = (int)(width * texture_carrefour.getSize().y /texture_carrefour.getSize().x);
     
-    sf::RenderWindow window(sf::VideoMode(width, height), "Simulation");
+    //Définition de la fenêtre
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Simulation");
     window.setVerticalSyncEnabled(true);
     
     //Positionnnement de l'image du carrefour
@@ -205,7 +207,7 @@ int main() {
         static_cast<float>(window.getSize().x) / texture_carrefour.getSize().x,
         static_cast<float>(window.getSize().y) / texture_carrefour.getSize().y
     );
-
+    
 
     //Feux de circulation (représentés par des disques)
     //H : horizontal
@@ -227,23 +229,24 @@ int main() {
 
 
 
-    Texture texture_voiture;
-    texture_voiture.loadFromFile("../../../../Assets/Vehicules/vecteezy_car-top-view-clipart-design-illustration_9380944.png");
-
-    
+    Car car1(4,texture_voiture,std::ref(window));
     
 
+
+
+
+
+
+    //Threads :
+
+    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
     
-
+    thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window));
     
-
-    //Thread permettant le fonctionnement des feux de circulation
-    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION);
-
 
     //Tant que la fenêtre est ouverte
     while (window.isOpen()) {
-
+        
         Event event;
 
         //Un évènement s'est-il produit ?
@@ -263,12 +266,17 @@ int main() {
         window.draw(feu_HD.return_traffic_light());
         window.draw(feu_VH.return_traffic_light());
         window.draw(feu_VB.return_traffic_light());
-        
+
+        //Affichage de/des voitures
+        window.draw(car1.return_sprite());
+
+
+
         window.display();
     }
     
     thread_feux.join();
-
+    thread_voiture.join();
     
     return 0;
 }

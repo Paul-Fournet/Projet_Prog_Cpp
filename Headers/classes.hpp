@@ -34,7 +34,7 @@ public:
     CircleShape return_traffic_light() const;//Arguments à vérifier
 };
 
-void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB,float time_on,float time_transition);
+void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB,float time_on,float time_transition,RenderWindow& window);
 
 
 
@@ -46,17 +46,31 @@ protected:
 public:
     virtual int get_type() = 0;
     virtual float get_n_speed() = 0;
-    virtual Sprite return_sprite()=0;
+    virtual Sprite& return_sprite() = 0;
 };
 
 
 class Car : RoadUser {
 private:
-    Vertex voie_;
+    int voie_;
+    /*
+    1 : gauche à droide
+    2 : haut en bas
+    3 : droite à gauche
+    4 : bas en haut
+    */
 
 public:
-    Car(Vertex voie);//La voie et la vitesse vont être déterminés automatiquement
+    Car(int voie, Texture& texture, RenderWindow& window);//La voie et la vitesse vont être déterminées automatiquement
     int get_type();
+    int get_voie();
     float get_n_speed();
-    Sprite return_sprite();
+    Sprite& return_sprite();
 };
+
+void car_start(Car& car, int delay, RenderWindow& window);
+
+
+
+
+

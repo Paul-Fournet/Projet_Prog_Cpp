@@ -1,2 +1,14 @@
 .vs/
 /out/
+/out/build/
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+build.ninja
+rules.ninja
+*.vcxproj
+*.vcxproj.filters
+*.sln
+*.log
+*.tmp

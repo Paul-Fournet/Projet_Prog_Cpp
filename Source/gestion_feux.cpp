@@ -44,16 +44,18 @@ CircleShape Traffic_light::return_traffic_light() const {
 	return shape;
 }
 
-void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB, float time_on, float time_transition) {
+void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& tlVH, Traffic_light& tlVB, float time_on, float time_transition,RenderWindow& window) {
 
 	Clock clock;
 	Time time_elapsed = clock.getElapsedTime();
 
 	Time time_ON = seconds(time_on);
 	Time time_TRANSITION = seconds(time_transition);
+
+	window.setActive(false);
 	
 	clock.restart();
-	while (true) {
+	while (window.isOpen()) {
 		cout << "Traffic light HG : Green" << endl << "Traffic light HD : Green" << endl;
 		cout << "Traffic light VH : Red" << endl << "Traffic light VB : Red" << endl;
 		while (clock.getElapsedTime() < time_ON) {
@@ -102,7 +104,4 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 			std::this_thread::sleep_for(std::chrono::milliseconds(100));
 		}
 	}
-	
-
-
 }
