@@ -56,8 +56,8 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 	
 	clock.restart();
 	while (window.isOpen()) {
-		cout << "Traffic light HG : Green" << endl << "Traffic light HD : Green" << endl;
-		cout << "Traffic light VH : Red" << endl << "Traffic light VB : Red" << endl;
+		cout << "Traffic light Horizontal : Green" << endl;
+		cout << "Traffic light Vertical : Red" << endl;
 		while (clock.getElapsedTime() < time_ON) {
 			time_elapsed = clock.getElapsedTime();
 			tlHG.set_color(Color::Green);
@@ -71,7 +71,7 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 		clock.restart();
 
 
-		cout << "Traffic light HG : Yellow" << endl << "Traffic light HD : Yellow" << endl;
+		cout << "Traffic light Horizontal : Yellow" << endl;
 		while (clock.getElapsedTime() < time_TRANSITION) {
 			time_elapsed = clock.getElapsedTime();
 			tlHG.set_color(Color::Yellow);
@@ -82,8 +82,8 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 
 		clock.restart();
 
-		cout << "Traffic light HG : Red" << endl << "Traffic light HD : Red" << endl;
-		cout << "Traffic light VH : Green" << endl << "Traffic light VB : Green" << endl;
+		cout << "Traffic light Horizontal : Red" << endl;
+		cout << "Traffic light Vertical : Green" << endl;
 		while (clock.getElapsedTime() < time_ON) {
 			time_elapsed = clock.getElapsedTime();
 			tlHG.set_color(Color::Red);
@@ -96,7 +96,7 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 
 		clock.restart();
 
-		cout << "Traffic light VH : Yellow" << endl << "Traffic light VH : Yellow" << endl;
+		cout << "Traffic light Vertical : Yellow" << endl;
 		while (clock.getElapsedTime() < time_TRANSITION) {
 			time_elapsed = clock.getElapsedTime();
 			tlVH.set_color(Color::Yellow);

@@ -186,7 +186,7 @@ int main() {
     //Définition des textures des éléments du jeu
 
     Texture texture_carrefour;
-    texture_carrefour.loadFromFile("../../../../Assets/Carrefour/image_carrefour.png");
+    texture_carrefour.loadFromFile("../../../../Assets/Carrefour/image_carrefour_2.png");
     
     Texture texture_voiture;
     texture_voiture.loadFromFile("../../../../Assets/Vehicules/vecteezy_car-top-view-clipart-design-illustration_9380944.png");
@@ -217,35 +217,70 @@ int main() {
     //B : bas
     //H : haut
 
-    Vector2f pos_feu_HG((float)window.getSize().x / 3, (float)2 * window.getSize().y / 3);
-    Vector2f pos_feu_HD((float)2 * window.getSize().x / 3, (float)window.getSize().y / 3);
-    Vector2f pos_feu_VH((float)3 * window.getSize().x / 8, (float)1 * window.getSize().y / 4);
-    Vector2f pos_feu_VB((float)5 * window.getSize().x / 8, (float)3 * window.getSize().y / 4);
+    Vector2f pos_feu_HG(235,660);
+    Vector2f pos_feu_HD(660, 303);
+    Vector2f pos_feu_VH(265, 275);
+    Vector2f pos_feu_VB(625, 680);
 
     Traffic_light feu_HG(Color::Black, 0, pos_feu_HG);
     Traffic_light feu_HD(Color::Black, 0, pos_feu_HD);
     Traffic_light feu_VH(Color::Black, 1, pos_feu_VH);
     Traffic_light feu_VB(Color::Black, 1, pos_feu_VB);
 
+    vector<Traffic_light*> vect_feux;
+    vect_feux.push_back(&feu_HG);
+    vect_feux.push_back(&feu_VH);
 
 
-    Car car1(1,texture_voiture,std::ref(window));
+
+    Car car1(4,texture_voiture,std::ref(window));
     
+    //Vector contenant les voitures affichées à l'écran
+    //vector<Car&> vect_cars;
 
-
-    FloatRect rect_feu1(100, 150, 100, 100);
-    
-    
+    //vect_cars.push_back(std::ref(car1));
 
     
+    //Zones d'arrêt de la voiture
+    RectangleShape rect_voie1(Vector2f(70, 45));
+    rect_voie1.setFillColor(Color(255,0,0,100));
+    rect_voie1.setPosition(188,538);
+    rect_voie1.setScale(1, 1);    
+
+    RectangleShape rect_voie2 = rect_voie1;
+    rect_voie2.rotate(90);
+    rect_voie2.setPosition(396, 224);
+
+    RectangleShape rect_voie3 = rect_voie1;
+    rect_voie3.setPosition(641, 387);
+
+    RectangleShape rect_voie4 = rect_voie2;
+    rect_voie4.setPosition(546, 676);
+
+    vector<RectangleShape*> vect_rectangles;
+    vect_rectangles.push_back(&rect_voie1);
+    vect_rectangles.push_back(&rect_voie2);
+    vect_rectangles.push_back(&rect_voie3);
+    vect_rectangles.push_back(&rect_voie4);
 
 
     //Threads :
+    //Thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
+    //thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window), vect_feux, vect_rectangles);
+    
+    //Vecteur contenant les threads
+    vector<std::thread> vect_threads;
+    vect_threads.emplace_back(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
+    vect_threads.emplace_back(car_start, std::ref(car1), DELAY, std::ref(window), vect_feux, vect_rectangles);
 
-    thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
+    //Vecteur de voitures utilisé en local
+    vector<Car*> vect_cars;
+    vect_cars.push_back(&car1);
     
-    thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window));
-    
+    Car car2(1, texture_voiture, std::ref(window));
+    vect_cars.push_back(&car2);
+    vect_threads.emplace_back(car_start, std::ref(car2), DELAY, std::ref(window), vect_feux, vect_rectangles);
+
 
     //Tant que la fenêtre est ouverte
     while (window.isOpen()) {
@@ -257,31 +292,52 @@ int main() {
             if (event.type == Event::Closed) {
                 window.close();
             }
+
+            if (event.type == Event::KeyPressed) {
+                if (event.key.scancode == sf::Keyboard::C) {
+                    
+                    
+                    
+                    //vect_threads.emplace_back(car_start, std::ref(car), DELAY, std::ref(window), vect_feux, vect_rectangles);
+
+                }
+            }
         }
 
         window.clear(Color::Black);
 
         //Affichage du carrefour
         window.draw(sprite_carrefour);
-        
+
         //Affichage des feux
         window.draw(feu_HG.return_traffic_light());
         window.draw(feu_HD.return_traffic_light());
         window.draw(feu_VH.return_traffic_light());
         window.draw(feu_VB.return_traffic_light());
 
+        window.draw(rect_voie1);
+        window.draw(rect_voie2);
+        window.draw(rect_voie3);
+        window.draw(rect_voie4);
+
         //Affichage de/des voitures
-        window.draw(car1.return_sprite());
-
-
-        
-
+        for (auto& car : vect_cars) {
+            window.draw(car->return_sprite());
+        }
+        //window.draw(car1.return_sprite());
 
         window.display();
     }
     
-    thread_feux.join();
-    thread_voiture.join();
+    //thread_feux.join();
+    //thread_voiture.join();
+
+    for (auto& thread : vect_threads) {
+        if (thread.joinable()) {
+            thread.join();
+        }
+    }
+
     
     return 0;
 }

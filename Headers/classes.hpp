@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <mutex>
+#include <vector>
 using namespace sf;
 
 //Couleurs des feux
@@ -40,8 +41,8 @@ void run_traffic_light(Traffic_light& tlHG, Traffic_light& tlHD, Traffic_light& 
 
 class RoadUser {
 protected:
-    int type_;//0 : voiture, 1 : bus, 2 : piétons, 3 : vélos
-    float n_speed_;
+    int type_ = 0;//0 : voiture, 1 : bus, 2 : piétons, 3 : vélos
+    float n_speed_ = 0;
     Sprite sprite_;
 public:
     virtual int get_type() = 0;
@@ -65,12 +66,30 @@ public:
     int get_type();
     int get_voie();
     float get_n_speed();
+    void forward(int delay, float speed, Clock& clock);
     Sprite& return_sprite();
 };
 
-void car_start(Car& car, int delay, RenderWindow& window);
+class Pedestrian : RoadUser
+{
+private:
+    //voie....
+
+public:
+    Pedestrian();
+    int get_type();
+    float get_n_speed();
+    Sprite& return_sprite();
+
+};
 
 
+void car_start(Car& car, int delay, RenderWindow& window, std::vector<Traffic_light*> vect_feux, std::vector<RectangleShape*> vect_rectangles);
 
+//Fonction qui vérifie si une voiture/un bus est dans un rectangle d'arrêt :
+bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleShape& rect);
+
+//Fonction qui vérifie si la voiture peut passer ou non
+bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu, RectangleShape& rect);
 
 

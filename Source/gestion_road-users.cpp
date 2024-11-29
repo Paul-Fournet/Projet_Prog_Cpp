@@ -10,7 +10,7 @@ Car::Car(int voie,Texture& texture,RenderWindow& window) : voie_(voie){
 	n_speed_ = CAR_SPEED;	
 	
 	Sprite sprite_voiture(texture);
-	sprite_voiture.setScale((float)0.02, (float)0.02);
+	sprite_voiture.setScale((float)0.015, (float)0.015);
 	//sprite_voiture.setPosition();			A MODIFIER
 
 	if (voie == 1) {
@@ -22,7 +22,7 @@ Car::Car(int voie,Texture& texture,RenderWindow& window) : voie_(voie){
 		sprite_voiture.rotate(180);
 	}
 	if (voie == 3) {
-		sprite_voiture.setPosition(window.getSize().x * VOIE_C3_X,window.getSize().y * VOIE_C3_Y);
+		sprite_voiture.setPosition(window.getSize().x * VOIE_C3_X, window.getSize().y * VOIE_C3_Y);
 		sprite_voiture.rotate(270);
 	}
 	if (voie == 4) {
@@ -54,33 +54,87 @@ Sprite& Car::return_sprite() {
 	return ref_sprite;
 }
 
+void Car::forward(int delay, float speed,Clock& clock) {
+
+	if (clock.getElapsedTime().asMilliseconds() > delay) {
+		clock.restart();
+
+		if (voie_ == 1) {
+			sprite_.move(n_speed_, 0);
+		}
+		if (voie_ == 2) {
+			sprite_.move(0, n_speed_);
+		}
+		if (voie_ == 3) {
+			sprite_.move(-n_speed_, 0);
+		}
+		if (voie_ == 4) {
+			sprite_.move(0, -n_speed_);
+		}
+	}
+}
 
 
-void car_start(Car& car,int delay,RenderWindow& window) {
+
+bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleShape& rect) {
+	return rect.getGlobalBounds().contains(vehicle_sprite.getPosition());
+}
+
+
+bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu,RectangleShape& rect) {
+	
+	if (isVehicleInRectangle(vehicle_sprite, rect) && feu.get_color()==Color::Red) {
+		return false;
+	}
+	else {
+		return true;
+	}
+
+}
+
+
+
+void car_start(Car& car,int delay,RenderWindow& window, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles) {
 	
 	Clock clock;
 	
 	window.setActive(false);
-	float pos = 0;
+	int voie = car.get_voie();
+	
+	Traffic_light* feu = NULL;
+	RectangleShape* rectangle = NULL;
+
+	//On associe à la voiture les feux qu'ils doivent respecter
+	if (voie == 1) {
+		feu = vect_feux.at(0);
+		rectangle = vect_rectangles.at(0);
+	}
+	if (voie == 2) {
+		feu = vect_feux.at(1);
+		rectangle = vect_rectangles.at(1);
+	}
+	if (voie == 3) {
+		feu = vect_feux.at(0);
+		rectangle = vect_rectangles.at(2);
+	}
+	if (voie == 4) {
+		feu = vect_feux.at(1);
+		rectangle = vect_rectangles.at(3);
+	}
+
+	if (feu == NULL || rectangle == NULL) {
+		return;
+	}
 
 	while (window.isOpen()) {
 
-		if (clock.getElapsedTime().asMilliseconds() > delay) {
-			clock.restart();
-
-			if (car.get_voie() == 1) {
-				car.return_sprite().move(car.get_n_speed(), 0);
-			}
-			if (car.get_voie() == 2) {
-				car.return_sprite().move(0, car.get_n_speed());
-			}
-			if (car.get_voie() == 3) {
-				car.return_sprite().move(-car.get_n_speed(), 0);
-			}
-			if (car.get_voie() == 4) {
-				car.return_sprite().move(0, -car.get_n_speed());
-			}
+		while (can_pass(std::ref(car.return_sprite()), *feu, *rectangle)) {
+			car.forward(delay, car.get_n_speed(), std::ref(clock));
 		}
+
 	}
 }
+
+
+
 
