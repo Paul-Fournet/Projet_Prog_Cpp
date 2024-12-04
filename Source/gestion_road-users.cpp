@@ -6,8 +6,8 @@
 Car::Car(int voie,Texture& texture,RenderWindow& window) : voie_(voie){
 	
 	type_ = 0;
-
-	n_speed_ = CAR_SPEED;	
+	n_speed_ = CAR_SPEED;
+	started_ = true;
 	
 	Sprite sprite_voiture(texture);
 	sprite_voiture.setScale((float)0.015, (float)0.015);
@@ -94,47 +94,71 @@ bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu,RectangleShap
 
 
 
-void car_start(Car& car,int delay,RenderWindow& window, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles) {
+void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_light*>& vect_feux, std::vector<sf::RectangleShape*>& vect_rectangles) {
 	
 	Clock clock;
 	
 	window.setActive(false);
-	int voie = car.get_voie();
+
+	bool to_die = false;
 	
-	Traffic_light* feu = NULL;
-	RectangleShape* rectangle = NULL;
+	while (window.isOpen() && car->started_) {
 
-	//On associe à la voiture les feux qu'ils doivent respecter
-	if (voie == 1) {
-		feu = vect_feux.at(0);
-		rectangle = vect_rectangles.at(0);
-	}
-	if (voie == 2) {
-		feu = vect_feux.at(1);
-		rectangle = vect_rectangles.at(1);
-	}
-	if (voie == 3) {
-		feu = vect_feux.at(0);
-		rectangle = vect_rectangles.at(2);
-	}
-	if (voie == 4) {
-		feu = vect_feux.at(1);
-		rectangle = vect_rectangles.at(3);
-	}
+		Traffic_light* feu = NULL;
+		RectangleShape* rectangle = NULL;
+		int voie = 0;
 
-	if (feu == NULL || rectangle == NULL) {
-		return;
-	}
+		voie = car->get_voie();
 
-	while (window.isOpen()) {
 
-		while (can_pass(std::ref(car.return_sprite()), *feu, *rectangle)) {
-			car.forward(delay, car.get_n_speed(), std::ref(clock));
+
+		//On associe à la voiture les feux qu'ils doivent respecter
+		if (voie == 1) {
+			feu = vect_feux.at(0);
+			rectangle = vect_rectangles.at(0);
+		}
+		if (voie == 2) {
+			feu = vect_feux.at(1);
+			rectangle = vect_rectangles.at(1);
+		}
+		if (voie == 3) {
+			feu = vect_feux.at(0);
+			rectangle = vect_rectangles.at(2);
+		}
+		if (voie == 4) {
+			feu = vect_feux.at(1);
+			rectangle = vect_rectangles.at(3);
 		}
 
+		if (feu == NULL || rectangle == NULL) {
+			return;
+		}
+
+		if (can_pass(std::ref(car->return_sprite()), *feu, *rectangle)) {
+			car->forward(delay, car->get_n_speed(), std::ref(clock));
+		}
+
+
+		if (car->return_sprite().getGlobalBounds().top +car->return_sprite().getGlobalBounds().height< 0 || car->return_sprite().getGlobalBounds().left + car->return_sprite().getGlobalBounds().width< 0 || car->return_sprite().getGlobalBounds().top > window.getSize().y || car->return_sprite().getGlobalBounds().left > window.getSize().x) {
+			clock.restart();
+			car->started_ = false;
+			cout << "Car unloaded" << endl;
+			
+		}
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
+	
 }
 
+/**/
 
 
+void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads,Texture texture_voiture,vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, RenderWindow& window) {
+	
+	auto newcar = new Car(voie, texture_voiture, std::ref(window));
+	vect_cars.push_back(newcar);
+	cout << "Car added, total cars :" << vect_cars.size() << endl;
 
+	vect_threads.emplace_back(car_start, newcar, DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+}

@@ -19,8 +19,8 @@ using namespace sf;
 const int WINDOW_WIDTH = 900;
 const int WINDOW_HEIGHT = 900;
 
-const float TIME_ON = 3;
-const float TIME_TRANSITION = 0.5;
+const float TIME_ON = 8;
+const float TIME_TRANSITION = 3;
  
 const float VOIE_C1_X = 0.f;
 const float VOIE_C1_Y = 0.623f;
@@ -36,10 +36,10 @@ const float VOIE_C4_Y = 1.f;
 
 
 
-const float CAR_SPEED = 1;
+const float CAR_SPEED = 4;
 
 
-const float DELAY = 5;
+const float DELAY = 1;
 
 
 

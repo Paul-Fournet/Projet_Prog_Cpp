@@ -242,14 +242,14 @@ int main() {
 
     
     //Zones d'arrêt de la voiture
-    RectangleShape rect_voie1(Vector2f(70, 45));
+    RectangleShape rect_voie1(Vector2f(60, 90));
     rect_voie1.setFillColor(Color(255,0,0,100));
-    rect_voie1.setPosition(188,538);
+    rect_voie1.setPosition(198,493);
     rect_voie1.setScale(1, 1);    
 
     RectangleShape rect_voie2 = rect_voie1;
     rect_voie2.rotate(90);
-    rect_voie2.setPosition(396, 224);
+    rect_voie2.setPosition(441, 234);
 
     RectangleShape rect_voie3 = rect_voie1;
     rect_voie3.setPosition(641, 387);
@@ -270,17 +270,27 @@ int main() {
     
     //Vecteur contenant les threads
     vector<std::thread> vect_threads;
+    //thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
     vect_threads.emplace_back(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
-    vect_threads.emplace_back(car_start, std::ref(car1), DELAY, std::ref(window), vect_feux, vect_rectangles);
+    
 
     //Vecteur de voitures utilisé en local
     vector<Car*> vect_cars;
-    vect_cars.push_back(&car1);
+    //vect_cars.push_back(&car1);
     
     Car car2(1, texture_voiture, std::ref(window));
-    vect_cars.push_back(&car2);
-    vect_threads.emplace_back(car_start, std::ref(car2), DELAY, std::ref(window), vect_feux, vect_rectangles);
+    //vect_cars.push_back(&car2);
 
+    Car car3(3, texture_voiture, std::ref(window));
+    //vect_cars.push_back(&car3);
+    
+    
+    //thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+    //vect_threads.emplace_back(car_start, vect_cars.at(0), DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+    //vect_threads.emplace_back(car_start, vect_cars.at(1), DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+    //vect_threads.emplace_back(car_start, vect_cars.at(2), DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+
+    int voie = 1;
 
     //Tant que la fenêtre est ouverte
     while (window.isOpen()) {
@@ -295,14 +305,23 @@ int main() {
 
             if (event.type == Event::KeyPressed) {
                 if (event.key.scancode == sf::Keyboard::C) {
-                    
-                    
-                    
-                    //vect_threads.emplace_back(car_start, std::ref(car), DELAY, std::ref(window), vect_feux, vect_rectangles);
 
+                    
                 }
             }
         }
+        if (clock_.getElapsedTime().asSeconds() >= 1) {
+            clock_.restart();
+            int voie = rand() % 3 + 1;
+
+            auto newcar = new Car(voie, texture_voiture, std::ref(window));
+            vect_cars.push_back(newcar);
+            cout << "Car added, total cars :" << vect_cars.size() << endl;
+
+            vect_threads.emplace_back(car_start, newcar, DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+
+        }
+        
 
         window.clear(Color::Black);
 
@@ -322,7 +341,9 @@ int main() {
 
         //Affichage de/des voitures
         for (auto& car : vect_cars) {
-            window.draw(car->return_sprite());
+            if (car->started_ == true) {
+                window.draw(car->return_sprite());
+            }
         }
         //window.draw(car1.return_sprite());
 
@@ -332,12 +353,15 @@ int main() {
     //thread_feux.join();
     //thread_voiture.join();
 
-    for (auto& thread : vect_threads) {
-        if (thread.joinable()) {
-            thread.join();
+    //thread_feux.join();
+    
+    for (auto& thread_ : vect_threads) {
+        if (thread_.joinable()) {
+            thread_.join();
         }
     }
-
     
+
+
     return 0;
 }

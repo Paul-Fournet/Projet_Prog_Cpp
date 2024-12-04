@@ -3,6 +3,7 @@
 #include <mutex>
 #include <vector>
 using namespace sf;
+using namespace std;
 
 //Couleurs des feux
 enum class Traffic_color {
@@ -48,10 +49,11 @@ public:
     virtual int get_type() = 0;
     virtual float get_n_speed() = 0;
     virtual Sprite& return_sprite() = 0;
+    bool started_=true;
 };
 
 
-class Car : RoadUser {
+class Car : public RoadUser {
 private:
     int voie_;
     /*
@@ -84,7 +86,7 @@ public:
 };
 
 
-void car_start(Car& car, int delay, RenderWindow& window, std::vector<Traffic_light*> vect_feux, std::vector<RectangleShape*> vect_rectangles);
+void car_start(Car* car, int delay, RenderWindow& window, std::vector<Traffic_light*>& vect_feux, std::vector<RectangleShape*>& vect_rectangles);
 
 //Fonction qui vérifie si une voiture/un bus est dans un rectangle d'arrêt :
 bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleShape& rect);
@@ -92,4 +94,5 @@ bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleS
 //Fonction qui vérifie si la voiture peut passer ou non
 bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu, RectangleShape& rect);
 
+void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads, Texture texture_voiture, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, RenderWindow& window);
 
