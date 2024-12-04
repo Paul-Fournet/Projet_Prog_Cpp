@@ -36,7 +36,7 @@ const float VOIE_C4_Y = 1.f;
 
 
 
-const float CAR_SPEED = 4;
+const float CAR_SPEED = 5;
 
 
 const float DELAY = 1;

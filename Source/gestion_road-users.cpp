@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-Car::Car(int voie,Texture& texture,RenderWindow& window) : voie_(voie){
+Car::Car(int voie,Texture& texture,RenderWindow& window,std::vector<Car*>& vect_cars) : voie_(voie), vect_cars_(vect_cars){
 	
 	type_ = 0;
 	n_speed_ = CAR_SPEED;
@@ -33,6 +33,15 @@ Car::Car(int voie,Texture& texture,RenderWindow& window) : voie_(voie){
 
 	sprite_ = sprite_voiture;
 
+	vect_cars.push_back(this);
+
+}
+
+Car::~Car() {
+	auto mycar_it = find(vect_cars_.begin(), vect_cars_.end(), this);
+	if (mycar_it != vect_cars_.end()) {
+		vect_cars_.erase(mycar_it);
+	}	
 }
 
 int Car::get_type() {
@@ -81,14 +90,25 @@ bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleS
 }
 
 
-bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu,RectangleShape& rect) {
+bool can_pass(Car* car, Traffic_light& feu,RectangleShape& rect) {
+
+	bool cond = false;
+
+	if ((!isVehicleInRectangle(car->return_sprite(), rect) || (feu.get_color() == Color::Green))) {
+		cond = true;
+	}
 	
-	if (isVehicleInRectangle(vehicle_sprite, rect) && feu.get_color()==Color::Red) {
-		return false;
+
+
+	for (auto& other_car : car->vect_cars_) {
+		if ((other_car->return_sprite().getGlobalBounds() != car->return_sprite().getGlobalBounds()) && car->return_sprite().getGlobalBounds().intersects(other_car->return_sprite().getGlobalBounds()) && feu.get_color()!=Color::Green) {
+			cond = false;
+		}
+
 	}
-	else {
-		return true;
-	}
+
+	
+	return cond;	
 
 }
 
@@ -101,6 +121,7 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 	window.setActive(false);
 
 	bool to_die = false;
+	int speed = car->get_n_speed();
 	
 	while (window.isOpen() && car->started_) {
 
@@ -134,8 +155,8 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 			return;
 		}
 
-		if (can_pass(std::ref(car->return_sprite()), *feu, *rectangle)) {
-			car->forward(delay, car->get_n_speed(), std::ref(clock));
+		if (can_pass(car, *feu, *rectangle)) {
+			car->forward(delay, speed, std::ref(clock));
 		}
 
 
@@ -143,6 +164,7 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 			clock.restart();
 			car->started_ = false;
 			cout << "Car unloaded" << endl;
+			car->~Car();
 			
 		}
 
@@ -156,7 +178,7 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 
 void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads,Texture texture_voiture,vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, RenderWindow& window) {
 	
-	auto newcar = new Car(voie, texture_voiture, std::ref(window));
+	auto newcar = new Car(voie, texture_voiture, std::ref(window),std::ref(vect_cars));
 	vect_cars.push_back(newcar);
 	cout << "Car added, total cars :" << vect_cars.size() << endl;
 

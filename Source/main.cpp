@@ -233,7 +233,7 @@ int main() {
 
 
 
-    Car car1(4,texture_voiture,std::ref(window));
+    //Car car1(4,texture_voiture,std::ref(window),std::ref(vect_ca));
     
     //Vector contenant les voitures affichées à l'écran
     //vector<Car&> vect_cars;
@@ -242,7 +242,7 @@ int main() {
 
     
     //Zones d'arrêt de la voiture
-    RectangleShape rect_voie1(Vector2f(60, 90));
+    RectangleShape rect_voie1(Vector2f(10, 90));
     rect_voie1.setFillColor(Color(255,0,0,100));
     rect_voie1.setPosition(198,493);
     rect_voie1.setScale(1, 1);    
@@ -252,10 +252,10 @@ int main() {
     rect_voie2.setPosition(441, 234);
 
     RectangleShape rect_voie3 = rect_voie1;
-    rect_voie3.setPosition(641, 387);
+    rect_voie3.setPosition(681, 387);
 
     RectangleShape rect_voie4 = rect_voie2;
-    rect_voie4.setPosition(546, 676);
+    rect_voie4.setPosition(546, 716);
 
     vector<RectangleShape*> vect_rectangles;
     vect_rectangles.push_back(&rect_voie1);
@@ -265,24 +265,15 @@ int main() {
 
 
     //Threads :
-    //Thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
-    //thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window), vect_feux, vect_rectangles);
-    
+
     //Vecteur contenant les threads
     vector<std::thread> vect_threads;
-    //thread thread_feux(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
+    
     vect_threads.emplace_back(run_traffic_light, std::ref(feu_HG), std::ref(feu_HD), std::ref(feu_VH), std::ref(feu_VB), TIME_ON, TIME_TRANSITION, std::ref(window));
     
 
     //Vecteur de voitures utilisé en local
     vector<Car*> vect_cars;
-    //vect_cars.push_back(&car1);
-    
-    Car car2(1, texture_voiture, std::ref(window));
-    //vect_cars.push_back(&car2);
-
-    Car car3(3, texture_voiture, std::ref(window));
-    //vect_cars.push_back(&car3);
     
     
     //thread thread_voiture(car_start, std::ref(car1), DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
@@ -314,8 +305,8 @@ int main() {
             clock_.restart();
             int voie = rand() % 3 + 1;
 
-            auto newcar = new Car(voie, texture_voiture, std::ref(window));
-            vect_cars.push_back(newcar);
+            auto newcar = new Car(voie, texture_voiture, std::ref(window),std::ref(vect_cars));
+
             cout << "Car added, total cars :" << vect_cars.size() << endl;
 
             vect_threads.emplace_back(car_start, newcar, DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
@@ -341,9 +332,7 @@ int main() {
 
         //Affichage de/des voitures
         for (auto& car : vect_cars) {
-            if (car->started_ == true) {
-                window.draw(car->return_sprite());
-            }
+            window.draw(car->return_sprite());
         }
         //window.draw(car1.return_sprite());
 
