@@ -187,9 +187,13 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 		}
 
 		if (can_pass(car, *feu, *rectangle)) {
+			//Accélérer jusqu'à la vitesse de croisière
+
 			car->forward(delay, speed, std::ref(clock));
 		}
 		else{
+			//Dccélérer jusqu'à l'arrêt complet
+
 			
 		}
 
@@ -207,7 +211,6 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 	
 }
 
-/**/
 
 
 void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads,Texture texture_voiture,vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, RenderWindow& window) {
@@ -217,4 +220,24 @@ void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads,Tex
 	cout << "Car added, total cars :" << vect_cars.size() << endl;
 
 	vect_threads.emplace_back(car_start, newcar, DELAY, std::ref(window), std::ref(vect_feux), std::ref(vect_rectangles));
+}
+
+
+
+bool is_lane_free(std::vector<Car*>& vect_cars, int voie) {
+
+	int nbcar_voie = 0;
+
+	for (auto& car : vect_cars) {
+		if (car->get_voie() == voie) {
+			nbcar_voie++;
+		}
+	}
+
+	if (((voie == 2 || voie == 4) && nbcar_voie >= 4) || ((voie == 1 || voie == 3) && nbcar_voie >= 3)) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }

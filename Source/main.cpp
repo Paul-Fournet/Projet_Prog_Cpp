@@ -303,7 +303,12 @@ int main() {
         }
         if (clock_.getElapsedTime().asSeconds() >= 1) {
             clock_.restart();
+
             int voie = rand() % 3 + 1;
+
+            while (!is_lane_free(std::ref(vect_cars), voie)) {
+                voie = rand() % 3 + 1;
+            }
 
             auto newcar = new Car(voie, texture_voiture, std::ref(window),std::ref(vect_cars));
 

@@ -88,8 +88,12 @@ public:
 
 };
 
+void speed_up(Car& car, int delay, RenderWindow& window);
+void slow_down(Car& car, int delay, RenderWindow& window);
+
 
 void car_start(Car* car, int delay, RenderWindow& window, std::vector<Traffic_light*>& vect_feux, std::vector<RectangleShape*>& vect_rectangles);
+
 
 //Fonction qui vérifie si une voiture/un bus est dans un rectangle d'arrêt :
 bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleShape& rect);
@@ -99,3 +103,5 @@ bool can_pass(const Car* car, Traffic_light& feu, RectangleShape& rect);
 
 void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads, Texture texture_voiture, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, sf::RenderWindow& window);
 
+//Fonction qui vérifie une certaine voie est libre ou non
+bool is_lane_free(std::vector<Car*>& vect_cars, int voie);
