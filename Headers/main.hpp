@@ -20,7 +20,7 @@ const int WINDOW_WIDTH = 900;
 const int WINDOW_HEIGHT = 900;
 
 const float TIME_ON = 8;
-const float TIME_TRANSITION = 3;
+const float TIME_TRANSITION = 1.5f;
  
 const float VOIE_C1_X = 0.f;
 const float VOIE_C1_Y = 0.623f;
@@ -36,8 +36,9 @@ const float VOIE_C4_Y = 1.f;
 
 
 
-const float CAR_SPEED = 4;
+const float CAR_SPEED = 5;
 
+const float DIST_MIN_CAR = 70;
 
 const float DELAY = 1;
 

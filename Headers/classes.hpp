@@ -56,6 +56,7 @@ public:
 class Car : public RoadUser {
 private:
     int voie_;
+    
     /*
     1 : gauche à droide
     2 : haut en bas
@@ -64,12 +65,14 @@ private:
     */
 
 public:
-    Car(int voie, Texture& texture, RenderWindow& window);//La voie et la vitesse vont être déterminées automatiquement
+    Car(int voie, Texture& texture, RenderWindow& window,std::vector<Car*>& vect_cars);//La voie et la vitesse vont être déterminées automatiquement
     int get_type();
     int get_voie();
     float get_n_speed();
     void forward(int delay, float speed, Clock& clock);
     Sprite& return_sprite();
+    std::vector<Car*>& vect_cars_;
+    ~Car();
 };
 
 class Pedestrian : RoadUser
@@ -92,7 +95,7 @@ void car_start(Car* car, int delay, RenderWindow& window, std::vector<Traffic_li
 bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleShape& rect);
 
 //Fonction qui vérifie si la voiture peut passer ou non
-bool can_pass(const sf::Sprite& vehicle_sprite, Traffic_light& feu, RectangleShape& rect);
+bool can_pass(const Car* car, Traffic_light& feu, RectangleShape& rect);
 
-void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads, Texture texture_voiture, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, RenderWindow& window);
+void add_car(int voie, vector<Car*>& vect_cars, vector<thread>& vect_threads, Texture texture_voiture, vector<Traffic_light*> vect_feux, vector<RectangleShape*> vect_rectangles, sf::RenderWindow& window);
 
