@@ -93,21 +93,52 @@ bool isVehicleInRectangle(const sf::Sprite& vehicle_sprite, const sf::RectangleS
 bool can_pass(Car* car, Traffic_light& feu,RectangleShape& rect) {
 
 	bool cond = false;
+	bool feu_vert = false;
+	bool in_rect = false;
+	bool intesects = false;
+	float dist_x = DIST_MIN_CAR;
+	float dist_y = DIST_MIN_CAR;
+
+
+	for (auto& other_car : car->vect_cars_) {
+
+		if ((other_car->return_sprite().getGlobalBounds() != car->return_sprite().getGlobalBounds())) {
+			
+			dist_x = abs(car->return_sprite().getPosition().x - other_car->return_sprite().getPosition().x);
+			dist_y = abs(car->return_sprite().getPosition().y - other_car->return_sprite().getPosition().y);
+
+			if (dist_x < DIST_MIN_CAR && dist_y < DIST_MIN_CAR) {
+				if (feu.get_color() != Color::Green) {
+					return false;
+				}
+			}
+
+			/*if (other_car->return_sprite().getGlobalBounds().intersects(car->return_sprite().getGlobalBounds())) {
+				if (feu.get_color() == Color::Green) {
+					cond = true;
+				}
+				else {
+					return false;
+				}
+			}*/
+
+			if ((!isVehicleInRectangle(car->return_sprite(), rect) || (feu.get_color() == Color::Green))) {
+				cond = true;
+			}
+
+			
+			
+
+
+
+		}
+	}
 
 	if ((!isVehicleInRectangle(car->return_sprite(), rect) || (feu.get_color() == Color::Green))) {
 		cond = true;
 	}
 	
 
-
-	for (auto& other_car : car->vect_cars_) {
-		if ((other_car->return_sprite().getGlobalBounds() != car->return_sprite().getGlobalBounds()) && car->return_sprite().getGlobalBounds().intersects(other_car->return_sprite().getGlobalBounds()) && feu.get_color()!=Color::Green) {
-			cond = false;
-		}
-
-	}
-
-	
 	return cond;	
 
 }
@@ -157,6 +188,9 @@ void car_start(Car* car,int delay,RenderWindow& window, std::vector<Traffic_ligh
 
 		if (can_pass(car, *feu, *rectangle)) {
 			car->forward(delay, speed, std::ref(clock));
+		}
+		else{
+			
 		}
 
 
