@@ -1,6 +1,5 @@
 .vs/
-/out/
-/out/build/
+out/
 build/
 CMakeFiles/
 CMakeCache.txt
