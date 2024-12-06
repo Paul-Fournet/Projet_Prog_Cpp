@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/paul.fournet/source/repos/Projet_Prog_Cpp_/Assets
+# Install script for directory: C:/Users/manguiliwe.awesso/source/repos/Projet_Prog_Cpp1/Assets
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Users/paul.fournet/Source/Repos/Projet_Prog_Cpp_/out/install/x64-Debug")
+  set(CMAKE_INSTALL_PREFIX "C:/Users/manguiliwe.awesso/Source/Repos/Projet_Prog_Cpp1/out/install/x64-Debug")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
